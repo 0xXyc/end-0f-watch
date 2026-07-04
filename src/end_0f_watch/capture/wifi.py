@@ -133,6 +133,11 @@ class WifiMonitorCapture(CaptureBackend):
     def stream(self) -> Iterator[Sighting]:
         from scapy.config import conf
         from scapy.sendrecv import AsyncSniffer  # lazy
+        # Importing the dot11 layer registers the radiotap datalink type (DLT 127 ->
+        # RadioTap) and DLT 105 -> Dot11. This MUST happen before the sniffer opens
+        # the interface, otherwise scapy can't map the link type and warns
+        # "Unable to guess datalink type (linktype=127)" and fails to decode frames.
+        from scapy.layers.dot11 import Dot11, RadioTap  # noqa: F401
 
         # On a radiotap monitor interface, scapy's native L2 socket cannot decode
         # 802.11 frames (it warns "Unable to guess type ... family=803"), so nothing
