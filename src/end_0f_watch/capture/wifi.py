@@ -12,8 +12,8 @@ from __future__ import annotations
 import os
 import queue
 import subprocess
+import sys
 import threading
-import time
 from typing import Iterator, List, Optional, Tuple
 
 from ..models import Sighting
@@ -131,7 +131,22 @@ class WifiMonitorCapture(CaptureBackend):
             self._stop_evt.wait(self.hop_interval)
 
     def stream(self) -> Iterator[Sighting]:
+        from scapy.config import conf
         from scapy.sendrecv import AsyncSniffer  # lazy
+
+        # On a radiotap monitor interface, scapy's native L2 socket cannot decode
+        # 802.11 frames (it warns "Unable to guess type ... family=803"), so nothing
+        # parses. Route capture through libpcap, which exposes the correct DLT
+        # (IEEE802_11_RADIO) and yields proper RadioTap/Dot11 layers.
+        if not conf.use_pcap:
+            try:
+                conf.use_pcap = True
+            except Exception as exc:  # libpcap not available
+                print(
+                    f"[!] could not enable libpcap ({exc}); 802.11 frames may not decode. "
+                    "Install it: sudo apt install libpcap0.8t64",
+                    file=sys.stderr,
+                )
 
         q: "queue.Queue" = queue.Queue(maxsize=10000)
 
@@ -143,9 +158,10 @@ class WifiMonitorCapture(CaptureBackend):
                 except queue.Full:
                     pass  # drop under load rather than block the sniffer thread
 
-        sniffer = AsyncSniffer(
-            iface=self.iface, monitor=True, store=False, prn=_cb, filter=self.bpf
-        )
+        # The interface is already in monitor mode (enforced by available()), so we do
+        # NOT pass monitor=True — asking scapy/libpcap to re-set rfmon can fail on some
+        # drivers (e.g. RTL8814AU) even though the iface is already monitoring fine.
+        sniffer = AsyncSniffer(iface=self.iface, store=False, prn=_cb, filter=self.bpf)
         sniffer.start()
         hop = threading.Thread(target=self._hopper, daemon=True)
         hop.start()

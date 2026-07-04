@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import asyncio
 import queue
+import sys
 import threading
 from typing import Iterator, Optional, Tuple
 
@@ -65,19 +66,29 @@ class BleCapture(CaptureBackend):
             if self.adapter:
                 kwargs["adapter"] = self.adapter
             scanner = BleakScanner(**kwargs)
-            await scanner.start()
+            try:
+                await scanner.start()
+            except Exception as exc:  # no adapter / bluetoothd down / DBus timeout
+                self._error = exc
+                return
             try:
                 while not self._stop_evt.is_set():
                     await asyncio.sleep(0.25)
             finally:
-                await scanner.stop()
+                try:
+                    await scanner.stop()
+                except Exception:
+                    pass
 
         def _thread_main():
             try:
                 asyncio.run(_run())
+            except Exception as exc:
+                self._error = exc
             finally:
                 q.put(_STOP)
 
+        self._error = None
         t = threading.Thread(target=_thread_main, daemon=True)
         t.start()
         try:
@@ -88,6 +99,15 @@ class BleCapture(CaptureBackend):
                 yield item
         finally:
             self.close()
+
+        # BLE failed to start: warn cleanly and yield nothing so a co-running
+        # Wi-Fi scan keeps going instead of dumping a traceback.
+        if self._error is not None:
+            hint = ""
+            if "bluez" in str(self._error).lower() or "org.bluez" in str(self._error):
+                hint = (" — is a Bluetooth adapter present in this host and bluetoothd running? "
+                        "try: sudo systemctl start bluetooth  (in a VM, pass through/enable Bluetooth)")
+            print(f"[!] BLE scanning disabled: {self._error}{hint}", file=sys.stderr)
 
     def close(self) -> None:
         self._stop_evt.set()
