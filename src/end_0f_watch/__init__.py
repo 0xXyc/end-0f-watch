@@ -9,6 +9,7 @@ injects, jams, or decodes payload contents. See README.md for scope and caveats.
 """
 
 __version__ = "0.2.0"
+__url__ = "https://github.com/0xXyc/end-0f-watch"
 
 from .models import Vendor, Oui, Fingerprint, Match, Sighting, Detection  # noqa: E402
 from .db import OuiDatabase  # noqa: E402
@@ -16,6 +17,7 @@ from .classifier import Classifier  # noqa: E402
 
 __all__ = [
     "__version__",
+    "__url__",
     "Vendor",
     "Oui",
     "Fingerprint",

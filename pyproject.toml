@@ -21,6 +21,10 @@ classifiers = [
 # on any host. Install with `pip install .[capture]` for live sniffing.
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/0xXyc/end-0f-watch"
+Repository = "https://github.com/0xXyc/end-0f-watch"
+
 [project.optional-dependencies]
 wifi = ["scapy>=2.5.0"]
 ble = ["bleak>=0.21.0"]
