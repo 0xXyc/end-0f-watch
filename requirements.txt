@@ -1,0 +1,7 @@
+# Core capture dependencies. Both are optional at import time — the package loads
+# and the `lookup` / `db` / `replay(--macs)` subcommands work with neither installed.
+#
+#   scapy  -> 802.11 monitor-mode sniffing and pcap replay
+#   bleak  -> cross-platform BLE advertisement scanning
+scapy>=2.5.0
+bleak>=0.21.0

@@ -1,0 +1,17 @@
+# Sample observations for offline replay tests / demos.
+# Format: MAC[,ssid][,ble_name][,source]   ('#' comments must be on their own line)
+#
+# Axon Enterprise (body cam) -> HIGH
+00:25:DF:12:34:56,,,wifi
+# Sierra Wireless AirLink (cruiser router) -> LOW
+64:CE:6E:AA:BB:CC,,,wifi
+# L-3 Mobile-Vision in-car (28-bit MA-M block) -> HIGH
+38:73:EA:01:02:03,,,wifi
+# WatchGuard Video in-car, advertising an SSID -> HIGH
+00:1D:96:0A:0B:0C,POLICE-4RE,,wifi
+# Randomized / locally-administered MAC -> not attributable
+02:11:22:33:44:55,,,wifi
+# Axon *Networks* (defunct Ethernet vendor) -> excluded false-positive trap
+00:58:28:00:00:01,,,wifi
+# Unrelated consumer device -> no match
+DE:AD:BE:EF:00:01,HomeWiFi,,wifi

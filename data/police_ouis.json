@@ -1,0 +1,885 @@
+{
+  "meta": {
+    "version": "0.2.0",
+    "generated": "2026-07-03",
+    "source": "IEEE MA-L/MA-M/MA-S registry (standards-oui.ieee.org) + curated LE attribution, adversarially verified",
+    "confidence_meaning": {
+      "high": "Vendor's hardware is near-exclusively LE / first-responder gear; an OUI match is strong evidence.",
+      "medium": "Public-safety-heavy but also broad enterprise/consumer lines; corroborate.",
+      "low": "General-purpose device merely common in cruisers; weak on its own."
+    },
+    "ota_emission_meaning": {
+      "confirmed": "Brand OUI is documented to appear over-the-air (Wi-Fi BSSID and/or non-randomized BLE).",
+      "router_bssid": "Router assigns its brand OUI to its Wi-Fi BSSID, so it is emitted over-the-air.",
+      "unverified": "Unknown whether the device's radio emits the brand OUI OTA (camera radio may present a COTS module OUI).",
+      "wired_only": "Brand OUI appears on the wired NIC/dock only; the OTA Wi-Fi/BT MAC is a COTS module OUI.",
+      "unknown": "Not characterized."
+    },
+    "caveats": [
+      "An OUI identifies a VENDOR, not a device model, and is never proof of active policing.",
+      "MAC randomization: unassociated Wi-Fi probe requests and BLE advertising commonly use locally-administered (randomized) MACs carrying no vendor OUI. Vendor OUIs reliably appear only on factory/public MACs (an associated Wi-Fi client, a router BSSID, or a BT-Classic public address).",
+      "OTA-emission reality: except for Axon (00:25:DF, confirmed on Wi-Fi+BLE) and the in-vehicle routers, most body cameras and rugged MDTs emit their COTS radio-MODULE maker's OUI over the air, not the brand OUI — see each vendor's ota_emission and the module_oui_vendors list.",
+      "Module-OUI blind spot: Getac, COBAN Technologies (Houston), i-PRO, BK Technologies, Wolfcom, Reveal Media, Edesix, and Pinnacle Response hold NO IEEE block, so they cannot be matched by a brand OUI at all.",
+      "Name-collision traps are enumerated in exclusions[]."
+    ]
+  },
+  "vendors": [
+    {
+      "id": "axon-enterprise",
+      "name": "Axon Enterprise, Inc.",
+      "category": "body_camera",
+      "police_confidence": "high",
+      "ota_emission": "confirmed",
+      "aka": [
+        "TASER International",
+        "TASER",
+        "Axon Body",
+        "Axon Fleet",
+        "Axon Signal"
+      ],
+      "note": "Near-exclusive US law-enforcement vendor: Axon Body 2/3/4 body cameras, Axon Fleet in-car video, TASER CEWs. The ONLY vendor here with public evidence of emitting its own OUI over the air — both the Wi-Fi BSSID and the (non-randomized) BLE advertising MAC start with 00:25:DF. A match means 'an Axon device' (cam/dock/Fleet/TASER), not strictly 'recording'.",
+      "false_positive_notes": "Not the defunct 'Axon Networks Inc.' (00:58:28 / 00:C0:D4 / 84:70:03) — see exclusions.",
+      "ouis": [
+        {
+          "prefix": "00:25:DF",
+          "registry": "MA-L",
+          "org": "Axon Enterprise, Inc.",
+          "loc": "Scottsdale, AZ, US"
+        }
+      ]
+    },
+    {
+      "id": "digital-ally",
+      "name": "Digital Ally, Inc.",
+      "category": "body_camera",
+      "police_confidence": "high",
+      "ota_emission": "unverified",
+      "aka": [
+        "FirstVU",
+        "DVM",
+        "VuLink"
+      ],
+      "note": "FirstVU Pro/HD body cameras and DVM-800/EVO-HD in-car video for LE/first responders (VuLink cross-activation). OTA emission of 00:23:BD by the camera radio is unverified — the VuLink Wi-Fi link may present a module OUI.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:23:BD",
+          "registry": "MA-L",
+          "org": "Digital Ally, Inc.",
+          "loc": "Lenexa/Grain Valley, KS/MO, US"
+        }
+      ]
+    },
+    {
+      "id": "watchguard-video",
+      "name": "WatchGuard Video (Motorola Solutions)",
+      "category": "in_car_video",
+      "police_confidence": "high",
+      "ota_emission": "unverified",
+      "aka": [
+        "WatchGuard",
+        "4RE",
+        "V300",
+        "VISTA WiFi"
+      ],
+      "note": "4RE in-car video and V300/VISTA body cameras; acquired by Motorola Solutions (2019). In-car VISTA WiFi Base broadcasts a recording-group AP. Anchor on OUI 00:1D:96 or Motorola Solutions OUIs, not on any SSID string.",
+      "false_positive_notes": "Distinct from WatchGuard Technologies (firewalls, 00:01:21 / 00:90:7F) — see exclusions.",
+      "ouis": [
+        {
+          "prefix": "00:1D:96",
+          "registry": "MA-L",
+          "org": "WatchGuard Video",
+          "loc": "Plano, TX, US"
+        }
+      ]
+    },
+    {
+      "id": "l3-mobile-vision",
+      "name": "L-3 Communications Mobile-Vision, Inc.",
+      "category": "in_car_video",
+      "police_confidence": "high",
+      "ota_emission": "unverified",
+      "aka": [
+        "Mobile-Vision",
+        "Flashback",
+        "Safe Fleet"
+      ],
+      "note": "Flashback in-car video DVRs for police fleets (now a Safe Fleet LE brand). DVR uploads via the station AP at shift change (client mode); passive-detect via probe/association using OUI 38:73:EA:0.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "38:73:EA:0",
+          "registry": "MA-M",
+          "org": "L-3 Communications Mobile-Vision, Inc.",
+          "loc": "Rockaway, NJ, US"
+        }
+      ]
+    },
+    {
+      "id": "vievu",
+      "name": "VIEVU",
+      "category": "body_camera",
+      "police_confidence": "high",
+      "ota_emission": "unverified",
+      "aka": [],
+      "note": "Police body cameras (LE-3/4/5). Acquired by Axon (2018), line discontinued but units remain fielded — a match is legacy but police-specific.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "FC:01:9E",
+          "registry": "MA-L",
+          "org": "VIEVU",
+          "loc": "Seattle, WA, US"
+        }
+      ]
+    },
+    {
+      "id": "motorola-solutions",
+      "name": "Motorola Solutions Inc.",
+      "category": "lmr_radio",
+      "police_confidence": "medium",
+      "ota_emission": "unknown",
+      "aka": [
+        "APX",
+        "MOTOTRBO"
+      ],
+      "note": "Public-safety LMR (APX/MOTOTRBO), dispatch, and body/in-car video via WatchGuard. NOT Motorola Mobility (Lenovo phones, excluded).",
+      "false_positive_notes": "Do not confuse with 'Motorola Mobility LLC, a Lenovo Company'.",
+      "ouis": [
+        {
+          "prefix": "00:04:7D",
+          "registry": "MA-L",
+          "org": "Motorola Solutions Inc.",
+          "loc": ""
+        },
+        {
+          "prefix": "00:1F:92",
+          "registry": "MA-L",
+          "org": "Motorola Solutions Inc.",
+          "loc": ""
+        },
+        {
+          "prefix": "00:18:85",
+          "registry": "MA-L",
+          "org": "Motorola Solutions Inc.",
+          "loc": ""
+        },
+        {
+          "prefix": "4C:CC:34",
+          "registry": "MA-L",
+          "org": "Motorola Solutions Inc.",
+          "loc": ""
+        },
+        {
+          "prefix": "10:74:6F",
+          "registry": "MA-L",
+          "org": "MOTOROLA SOLUTIONS MALAYSIA SDN. BHD.",
+          "loc": "Penang, MY"
+        },
+        {
+          "prefix": "B8:E2:8C",
+          "registry": "MA-L",
+          "org": "MOTOROLA SOLUTIONS MALAYSIA SDN. BHD.",
+          "loc": "Penang, MY"
+        },
+        {
+          "prefix": "9C:86:2B",
+          "registry": "MA-L",
+          "org": "MOTOROLA SOLUTIONS MALAYSIA SDN. BHD.",
+          "loc": "Penang, MY"
+        }
+      ]
+    },
+    {
+      "id": "harris-l3harris",
+      "name": "Harris Corporation (L3Harris)",
+      "category": "lmr_radio",
+      "police_confidence": "medium",
+      "ota_emission": "unknown",
+      "aka": [
+        "L3Harris",
+        "XL-200",
+        "XG-100"
+      ],
+      "note": "L3Harris public-safety P25 LMR (XL/XG series). Also broadcast/other RF.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:17:F3",
+          "registry": "MA-L",
+          "org": "Harris Corporation",
+          "loc": "Melbourne, FL, US"
+        }
+      ]
+    },
+    {
+      "id": "sepura",
+      "name": "Sepura Limited",
+      "category": "lmr_radio",
+      "police_confidence": "medium",
+      "ota_emission": "unknown",
+      "aka": [],
+      "note": "TETRA / public-safety subscriber radios; predominant among EU/UK police.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:1E:96",
+          "registry": "MA-L",
+          "org": "Sepura Limited",
+          "loc": "Cambridge, GB"
+        }
+      ]
+    },
+    {
+      "id": "tait",
+      "name": "Tait Communications (Tait Electronics)",
+      "category": "lmr_radio",
+      "police_confidence": "medium",
+      "ota_emission": "unknown",
+      "aka": [],
+      "note": "Public-safety LMR (P25/DMR/TETRA).",
+      "false_positive_notes": "Distinct from 'TAIT Global LLC' (8C:1F:64:A7:8), entertainment staging — see exclusions.",
+      "ouis": [
+        {
+          "prefix": "00:0D:CA",
+          "registry": "MA-L",
+          "org": "Tait Electronics",
+          "loc": "Christchurch, NZ"
+        }
+      ]
+    },
+    {
+      "id": "efjohnson",
+      "name": "E.F. Johnson (EFJohnson Technologies)",
+      "category": "lmr_radio",
+      "police_confidence": "medium",
+      "ota_emission": "unknown",
+      "aka": [
+        "Viking",
+        "VP5000",
+        "VP8000",
+        "ATLAS"
+      ],
+      "note": "Dedicated US public-safety P25 vendor (Viking VP-series; ATLAS P25 systems). CAVEAT: VP Bluetooth is usually a third-party multi-pin adapter, so the on-air BT MAC is the adapter maker's, not 00:08:B8.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:08:B8",
+          "registry": "MA-L",
+          "org": "E.F. Johnson",
+          "loc": "Waseca, MN, US"
+        }
+      ]
+    },
+    {
+      "id": "jvckenwood",
+      "name": "JVCKENWOOD Corporation (Kenwood)",
+      "category": "lmr_radio",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [
+        "Kenwood",
+        "NX-5000"
+      ],
+      "note": "NX-5000 multi-protocol (P25/NXDN/DMR) portables used by some agencies, but Kenwood LMR is commercial-dominant — weak police signal on its own.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:0D:4F",
+          "registry": "MA-L",
+          "org": "Kenwood Corporation",
+          "loc": "Yokohama, JP"
+        },
+        {
+          "prefix": "E0:DA:DC",
+          "registry": "MA-L",
+          "org": "JVC KENWOOD Corporation",
+          "loc": "Yokohama, JP"
+        }
+      ]
+    },
+    {
+      "id": "hytera",
+      "name": "Hytera Communications Corp. Ltd.",
+      "category": "lmr_radio",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [
+        "BD5-series",
+        "PD7-series"
+      ],
+      "note": "DMR portables, some TETRA. Commercial/security-dominant; US LE adoption sharply limited by NDAA Sec.889. Higher (medium) relevance in some non-US jurisdictions.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "64:69:BC",
+          "registry": "MA-L",
+          "org": "Hytera Communications Co .,ltd",
+          "loc": "Shenzhen, CN"
+        },
+        {
+          "prefix": "9C:06:6E",
+          "registry": "MA-L",
+          "org": "Hytera Communications Corporation Limited",
+          "loc": "Shenzhen, CN"
+        }
+      ]
+    },
+    {
+      "id": "airbus-tetra",
+      "name": "Airbus Defence and Space (TETRA, ex-Cassidian/EADS)",
+      "category": "lmr_radio",
+      "police_confidence": "medium",
+      "ota_emission": "unknown",
+      "aka": [
+        "Cassidian",
+        "EADS Secure Networks",
+        "TH1n",
+        "THR9"
+      ],
+      "note": "TETRA handsets (TH1n/THR9/THR9i) common on European police TETRA networks. Corporate blocks are broad, not TETRA-specific.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:23:B9",
+          "registry": "MA-L",
+          "org": "Airbus Defence and Space Deutschland GmbH",
+          "loc": "Taufkirchen, DE"
+        },
+        {
+          "prefix": "00:0A:3E",
+          "registry": "MA-L",
+          "org": "EADS Telecom",
+          "loc": ""
+        }
+      ]
+    },
+    {
+      "id": "codan",
+      "name": "Codan Radio Communications",
+      "category": "lmr_radio",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [
+        "Daniels Electronics"
+      ],
+      "note": "P25 LMR infrastructure + HF radio; more infrastructure/HF than Wi-Fi/BLE-emitting handhelds — low passive relevance.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:14:91",
+          "registry": "MA-L",
+          "org": "Daniels Electronics Ltd. dba Codan Radio Communications",
+          "loc": "Victoria, BC, CA"
+        },
+        {
+          "prefix": "00:12:E0",
+          "registry": "MA-L",
+          "org": "Codan Limited",
+          "loc": "Mawson Lakes, AU"
+        }
+      ]
+    },
+    {
+      "id": "simoco",
+      "name": "Simoco (Team Simoco)",
+      "category": "lmr_radio",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [],
+      "note": "DMR/analog LMR; utilities/transport/some international public safety; limited US presence.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:1A:08",
+          "registry": "MA-L",
+          "org": "Simoco Ltd.",
+          "loc": "Derby, GB"
+        },
+        {
+          "prefix": "00:0E:06",
+          "registry": "MA-L",
+          "org": "Team Simoco Ltd",
+          "loc": "Derby, GB"
+        }
+      ]
+    },
+    {
+      "id": "thales-comms",
+      "name": "Thales Communications Inc.",
+      "category": "lmr_radio",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [
+        "Liberty"
+      ],
+      "note": "Liberty multiband SDR P25 portable (niche) + broad tactical/military line. Other Thales divisions' OUIs are unrelated — do not attribute.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:26:B3",
+          "registry": "MA-L",
+          "org": "Thales Communications Inc",
+          "loc": ""
+        }
+      ]
+    },
+    {
+      "id": "icom",
+      "name": "Icom Inc.",
+      "category": "lmr_radio",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [
+        "IDAS",
+        "IC-F"
+      ],
+      "note": "IC-F IDAS/NXDN and select P25 LMR; predominantly commercial/amateur, limited US police P25 footprint. BT only via optional module.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:90:C7",
+          "registry": "MA-L",
+          "org": "ICOM INC.",
+          "loc": "Osaka, JP"
+        }
+      ]
+    },
+    {
+      "id": "selex-leonardo",
+      "name": "Selex Communications (Leonardo)",
+      "category": "lmr_radio",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [],
+      "note": "Niche professional/TETRA radio, primarily European. Broad 'Leonardo' blocks are not radio-specific — do not attribute those.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:17:28",
+          "registry": "MA-L",
+          "org": "Selex Communications",
+          "loc": ""
+        }
+      ]
+    },
+    {
+      "id": "vertex-standard-lmr",
+      "name": "Vertex Standard LMR, Inc.",
+      "category": "lmr_radio",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [
+        "eVerge",
+        "VXD"
+      ],
+      "note": "Commercial/business LMR, NOT front-line P25 public safety. Low police relevance.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "58:94:CF",
+          "registry": "MA-L",
+          "org": "Vertex Standard LMR, Inc.",
+          "loc": "Tokyo, JP"
+        }
+      ]
+    },
+    {
+      "id": "cradlepoint",
+      "name": "Cradlepoint, Inc.",
+      "category": "mobile_router",
+      "police_confidence": "medium",
+      "ota_emission": "router_bssid",
+      "aka": [
+        "COR",
+        "IBR",
+        "R-Series",
+        "Ericsson"
+      ],
+      "note": "Cellular routers very widely deployed in police cruisers (COR/IBR/R-series); the router assigns its OUI to its Wi-Fi BSSID (emitted on-air). Also broad enterprise/IoT use — medium.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:30:44",
+          "registry": "MA-L",
+          "org": "CradlePoint, Inc",
+          "loc": "Boise, ID, US"
+        },
+        {
+          "prefix": "00:E0:1C",
+          "registry": "MA-L",
+          "org": "CradlePoint, Inc",
+          "loc": "Boise, ID, US"
+        }
+      ]
+    },
+    {
+      "id": "sierra-wireless",
+      "name": "Sierra Wireless, ULC",
+      "category": "mobile_router",
+      "police_confidence": "medium",
+      "ota_emission": "router_bssid",
+      "aka": [
+        "AirLink",
+        "MG90",
+        "MP70",
+        "RV55"
+      ],
+      "note": "AirLink MG90/MP70 are FirstNet public-safety in-vehicle routers with documented LE use (offloading V300 BWC / 4RE video). Capped at medium: identical AirLink hardware is heavily deployed in transit/rail/utilities and Sierra modules ride inside countless third-party devices.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "50:13:9D",
+          "registry": "MA-L",
+          "org": "Sierra Wireless, ULC",
+          "loc": "Richmond, BC, CA"
+        },
+        {
+          "prefix": "84:DB:2F",
+          "registry": "MA-L",
+          "org": "Sierra Wireless, ULC",
+          "loc": "Richmond, BC, CA"
+        },
+        {
+          "prefix": "64:CE:6E",
+          "registry": "MA-L",
+          "org": "Sierra Wireless, ULC",
+          "loc": "Richmond, BC, CA"
+        },
+        {
+          "prefix": "00:14:3E",
+          "registry": "MA-L",
+          "org": "AirLink Communications, Inc.",
+          "loc": "(legacy AirLink Communications, Inc.)"
+        }
+      ]
+    },
+    {
+      "id": "peplink-pepwave",
+      "name": "Peplink / Pepwave",
+      "category": "mobile_router",
+      "police_confidence": "low",
+      "ota_emission": "router_bssid",
+      "aka": [
+        "MAX",
+        "BR1",
+        "Transit"
+      ],
+      "note": "Mobile/failover routers used in some public-safety vehicles; broadly general-purpose (RV/marine/transit/SMB) — weak on its own.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "D4:13:F8",
+          "registry": "MA-L",
+          "org": "Peplink International Ltd.",
+          "loc": "Kowloon, HK"
+        },
+        {
+          "prefix": "A8:C0:EA",
+          "registry": "MA-L",
+          "org": "Pepwave Limited",
+          "loc": "Hong Kong, HK"
+        }
+      ]
+    },
+    {
+      "id": "utility-inc",
+      "name": "Utility, Inc. (BodyWorn)",
+      "category": "mobile_router",
+      "police_confidence": "low",
+      "ota_emission": "unverified",
+      "aka": [
+        "Utility Associates",
+        "BodyWorn",
+        "Rocket IoT"
+      ],
+      "note": "In-vehicle 'Rocket IoT' router/MDT connectivity for LE. ATTRIBUTION CAVEAT: verifiers agreed IEEE lists 'Utility, Inc' but could not fully rule out a same-name company. The BodyWorn camera runs on a ruggedized-Android phone, so its Wi-Fi/BLE MAC is the phone SoC's, NOT these OUIs — treat these prefixes as fleet/MDT (Rocket), not BWC.",
+      "false_positive_notes": "Not 'Vutility Inc' (D4:63:52, energy metering) — see exclusions.",
+      "ouis": [
+        {
+          "prefix": "00:16:ED",
+          "registry": "MA-L",
+          "org": "Utility, Inc",
+          "loc": "Decatur, GA, US"
+        },
+        {
+          "prefix": "00:09:BC",
+          "registry": "MA-L",
+          "org": "Utility, Inc",
+          "loc": "Decatur, GA, US"
+        }
+      ]
+    },
+    {
+      "id": "panasonic-connect",
+      "name": "Panasonic Connect Co., Ltd.",
+      "category": "mdt_laptop",
+      "police_confidence": "low",
+      "ota_emission": "wired_only",
+      "aka": [
+        "Toughbook"
+      ],
+      "note": "Toughbook rugged MDTs used by police. Toughbook Wi-Fi/BT is a COTS Intel module (e.g. AX201), so these Panasonic OUIs appear on the WIRED NIC/dock, not over the air. NOTE: the Arbitrator in-car video line was spun off to i-PRO in 2019 (see module-OUI vendors), so in_car_video is NOT attributed here.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "B8:20:8E",
+          "registry": "MA-L",
+          "org": "Panasonic Connect Co., Ltd.",
+          "loc": "Fukuoka, JP"
+        },
+        {
+          "prefix": "4C:36:4E",
+          "registry": "MA-L",
+          "org": "Panasonic Connect Co., Ltd.",
+          "loc": "Fukuoka, JP"
+        },
+        {
+          "prefix": "BC:3E:0B",
+          "registry": "MA-L",
+          "org": "Panasonic Connect Co., Ltd.",
+          "loc": "Fukuoka, JP"
+        }
+      ]
+    },
+    {
+      "id": "seon-design",
+      "name": "Seon Design Inc. (Safe Fleet)",
+      "category": "in_car_video",
+      "police_confidence": "low",
+      "ota_emission": "unverified",
+      "aka": [],
+      "note": "Primarily transit/school-bus mobile DVR/NVR (Trooper/Explorer HD/vMax). Useful mainly as the citable Safe-Fleet-family OUI proxy, since Safe Fleet's LE brand COBAN has no OUI of its own. Weight low for LE patrol.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:1C:3C",
+          "registry": "MA-L",
+          "org": "Seon Design Inc.",
+          "loc": "Coquitlam, BC, CA"
+        }
+      ]
+    },
+    {
+      "id": "rosco-vision",
+      "name": "Rosco, Inc. (Rosco Vision Systems)",
+      "category": "in_car_video",
+      "police_confidence": "low",
+      "ota_emission": "unverified",
+      "aka": [],
+      "note": "Fleet/commercial/school-bus DVRs (Dual-Vision/DV6/RoscoLive) — low LE-patrol relevance.",
+      "false_positive_notes": "Not 'Rosco Entertainment Technology' (00:04:39, theatrical lighting).",
+      "ouis": [
+        {
+          "prefix": "F4:69:D5:7",
+          "registry": "MA-M",
+          "org": "Rosco, Inc",
+          "loc": "Jamaica, NY, US"
+        }
+      ]
+    },
+    {
+      "id": "kymeta",
+      "name": "Kymeta",
+      "category": "satcom",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [],
+      "note": "Flat-panel electronically-steered SATCOM on some gov/first-responder vehicles; primarily gov/mil/maritime.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "BC:AD:90",
+          "registry": "MA-L",
+          "org": "Kymeta Purchasing",
+          "loc": "Redmond, WA, US"
+        }
+      ]
+    },
+    {
+      "id": "zepcam",
+      "name": "Zepcam B.V.",
+      "category": "body_camera",
+      "police_confidence": "medium",
+      "ota_emission": "unverified",
+      "aka": [],
+      "note": "Body-worn cameras for police/security/first-responders (primarily EU). Also private-security use, hence medium. OTA brand-OUI emission unverified.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "48:46:8D",
+          "registry": "MA-L",
+          "org": "Zepcam B.V.",
+          "loc": "Delft, NL"
+        }
+      ]
+    },
+    {
+      "id": "digital-barriers",
+      "name": "Digital Barriers",
+      "category": "surveillance",
+      "police_confidence": "medium",
+      "ota_emission": "unverified",
+      "aka": [
+        "EdgeVis",
+        "SmartVis"
+      ],
+      "note": "Body-worn and covert surveillance / live streaming (EdgeVis). Used by police, military and security.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "00:24:39",
+          "registry": "MA-L",
+          "org": "Digital Barriers Advanced Technologies",
+          "loc": "Glasgow, GB"
+        }
+      ]
+    },
+    {
+      "id": "federal-signal",
+      "name": "Federal Signal SSG",
+      "category": "signaling",
+      "police_confidence": "low",
+      "ota_emission": "unknown",
+      "aka": [],
+      "note": "Emergency-vehicle light bars/sirens/warning. Rarely Wi-Fi/BLE-emitting — low passive relevance; kept for completeness.",
+      "false_positive_notes": "",
+      "ouis": [
+        {
+          "prefix": "08:3C:03:0",
+          "registry": "MA-M",
+          "org": "Federal Signal SSG",
+          "loc": "University Park, IL, US"
+        }
+      ]
+    }
+  ],
+  "module_oui_vendors": [
+    {
+      "id": "getac",
+      "name": "Getac (Video Solutions / Technology Corp.)",
+      "category": "body_camera",
+      "reason": "No IEEE OUI under 'Getac'. BC-0x body cams, VR-X10 in-car DVR, B360/F110 MDTs all ride on COTS radios (Intel AX201 Wi-Fi + Sierra WWAN) — OTA MAC is the module maker's."
+    },
+    {
+      "id": "coban-technologies",
+      "name": "COBAN Technologies, Inc. (Houston, Safe Fleet)",
+      "category": "in_car_video",
+      "reason": "Genuine LE in-car DVR maker (EDGE/Focus/Titan) with NO IEEE OUI. On-air MAC is the module maker's. Distinct from 'COBAN SRL' (Italy) which is denylisted. Safe-Fleet-family OUI proxy is Seon Design (00:1C:3C)."
+    },
+    {
+      "id": "ipro-americas",
+      "name": "i-PRO Americas Inc. (ex-Panasonic i-PRO)",
+      "category": "in_car_video",
+      "reason": "Owns the Arbitrator 360/360HD in-car DVR + BWC4000 body cam after the 2019 Panasonic spin-off. No OUI attributable to Arbitrator/BWC4000; the 360HD's integrated 802.11n uses an Intel/COTS-module OUI, and installs often pair with a Utility 'Rocket' router that is the real RF emitter."
+    },
+    {
+      "id": "bk-technologies",
+      "name": "BK Technologies (RELM / Bendix King)",
+      "category": "lmr_radio",
+      "reason": "High-value US federal/wildland-fire P25 gear (KNG2 series) with built-in Bluetooth, but NO IEEE OUI — the BLE MAC is a COTS module's (Nordic/TI/Qualcomm) or a random address. Not OUI-detectable."
+    },
+    {
+      "id": "wolfcom",
+      "name": "WOLFCOM Enterprises",
+      "category": "body_camera",
+      "reason": "No IEEE OUI. Rebrands Asian-ODM cameras (Halo/Vision/3rd Eye); Wi-Fi models expose the module chipmaker's OUI."
+    },
+    {
+      "id": "reveal-media",
+      "name": "Reveal Media Ltd",
+      "category": "body_camera",
+      "reason": "No IEEE OUI. D-Series (D5) Wi-Fi/BT live-stream + BLE triggers ride on the COTS module OUI. Do not conflate with Digital Barriers (00:24:39)."
+    },
+    {
+      "id": "edesix",
+      "name": "Edesix Ltd / VideoBadge (Motorola)",
+      "category": "body_camera",
+      "reason": "No IEEE OUI under 'Edesix'/'VaaS'. VB-300/VB-400 (now Motorola VB400) Wi-Fi models expose the COTS module OUI; a Motorola-provisioned MAC is possible but unverified."
+    },
+    {
+      "id": "pinnacle-response",
+      "name": "Pinnacle Response Ltd",
+      "category": "body_camera",
+      "reason": "No IEEE OUI. PR6/PR7 are ODM-built by Computime (00:1E:5E); the OTA Wi-Fi OUI is most likely the embedded chip's, and Wi-Fi is off by default (cradle/side-button only)."
+    }
+  ],
+  "exclusions": [
+    {
+      "prefix": "00:58:28",
+      "org": "Axon Networks Inc.",
+      "reason": "Defunct 1990s Ethernet networking vendor, NOT Axon Enterprise body cameras."
+    },
+    {
+      "prefix": "00:C0:D4",
+      "org": "AXON NETWORKS, INC.",
+      "reason": "Axon Networks (defunct networking), NOT Axon Enterprise."
+    },
+    {
+      "prefix": "84:70:03",
+      "org": "Axon Networks Inc.",
+      "reason": "Axon Networks (defunct networking), NOT Axon Enterprise."
+    },
+    {
+      "prefix": "00:01:21",
+      "org": "WatchGuard Technologies, Inc.",
+      "reason": "Network firewall/UTM vendor, NOT WatchGuard Video."
+    },
+    {
+      "prefix": "00:90:7F",
+      "org": "WatchGuard Technologies, Inc.",
+      "reason": "WatchGuard Technologies firewall/AP block, NOT WatchGuard Video."
+    },
+    {
+      "prefix": "24:A3:F0:7",
+      "org": "COBAN SRL",
+      "reason": "Italian 'COBAN SRL', NOT Coban Technologies (Houston LE in-car video)."
+    },
+    {
+      "prefix": "00:1B:C5:0B:4",
+      "org": "COBAN SRL",
+      "reason": "Italian 'COBAN SRL' (MA-S block), NOT Coban Technologies."
+    },
+    {
+      "prefix": "8C:1F:64:A7:8",
+      "org": "TAIT Global LLC",
+      "reason": "Entertainment-staging company (Tait Towers), NOT Tait Communications radios."
+    },
+    {
+      "prefix": "00:55:DA:B",
+      "org": "Interaxon Inc",
+      "reason": "Muse EEG meditation headband; matches on 'axon' but unrelated."
+    },
+    {
+      "prefix": "D4:63:52",
+      "org": "Vutility Inc.",
+      "reason": "Energy-metering 'Vutility Inc', name-adjacent to Utility, Inc (BodyWorn) but unrelated."
+    }
+  ],
+  "fingerprints": [
+    {
+      "vendor_id": "axon-enterprise",
+      "kind": "wifi_ssid",
+      "pattern": "^AXON-X[0-9A-Z]+",
+      "confidence": "medium",
+      "source": "WiGLE / vertex.link crowdsourced; DEF CON 31 RFParty",
+      "caveat": "Camera streaming/upload SoftAP name (e.g. AXON-X6032638M). Crowdsourced, not an Axon spec; the BSSID OUI 00:25:DF is the more reliable anchor."
+    },
+    {
+      "vendor_id": "cradlepoint",
+      "kind": "wifi_ssid",
+      "pattern": "^IBR\\d{3,4}[-_]",
+      "confidence": "low",
+      "source": "WiGLE / vertex.link; Cradlepoint default-SSID docs",
+      "caveat": "Default '<Model>-<3 hex>' SSID (e.g. IBR900-xxx). GENERAL-PURPOSE router, not police-exclusive; fleet units usually rename/hide the SSID via NetCloud."
+    },
+    {
+      "vendor_id": "peplink-pepwave",
+      "kind": "wifi_ssid",
+      "pattern": "^PEP(WAVE|LINK)_[0-9A-F]{4}",
+      "confidence": "low",
+      "source": "forum.peplink.com; Pepwave MAX manual",
+      "caveat": "Community-reported default 'PEPWAVE_XXXX'/'PEPLINK_XXXX'; commonly customized in the field. Broad non-police user base."
+    }
+  ]
+}

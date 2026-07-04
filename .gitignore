@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# IEEE registry snapshots pulled by the builder (regenerate with `policeoui update-db`)
+data/oui.csv
+data/mam.csv
+data/oui36.csv
+data/*.ieee.csv
+
+# Capture artifacts / research output
+*.pcap
+*.pcapng
+*.jsonl
+*.log
+out/
+captures/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

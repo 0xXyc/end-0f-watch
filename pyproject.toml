@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "end-0f-watch"
+version = "0.2.0"
+description = "end-0f-watch: passive RF reconnaissance CLI that detects police body-cam & cruiser device OUIs via broadcast Wi-Fi/BLE MAC prefixes"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Swiz Security" }]
+keywords = ["rf", "reconnaissance", "oui", "mac", "802.11", "ble", "wifi", "surveillance-research"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+    "Topic :: System :: Networking :: Monitoring",
+]
+
+# Capture backends are optional extras so the DB/lookup tooling installs cleanly
+# on any host. Install with `pip install .[capture]` for live sniffing.
+dependencies = []
+
+[project.optional-dependencies]
+wifi = ["scapy>=2.5.0"]
+ble = ["bleak>=0.21.0"]
+capture = ["scapy>=2.5.0", "bleak>=0.21.0"]
+dev = ["scapy>=2.5.0", "bleak>=0.21.0", "pytest>=7.0"]
+
+[project.scripts]
+end-0f-watch = "end_0f_watch.cli:main"
+eow = "end_0f_watch.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+end_0f_watch = ["../../data/police_ouis.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
